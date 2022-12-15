@@ -1,5 +1,7 @@
 <template>
-  <div>Main view</div>
+  <b-row>
+    <b-col>Test</b-col>
+  </b-row>
 </template>
 
 <script>
@@ -29,7 +31,7 @@ export default {
       scene = new THREE.Scene();
 
       const texture = new THREE.TextureLoader().load(
-        require("../assets/logo.png")
+        require("../assets/texture.jpg")
       );
 
       const geometry = new THREE.BoxGeometry(200, 200, 200);
