@@ -1,6 +1,6 @@
 <template>
-  <b-row>
-    <b-col>Test</b-col>
+  <b-row no-gutters class="justify-content-center">
+    <b-col md="8"><div class="main-frame" ref="mainFrame"></div></b-col>
   </b-row>
 </template>
 
@@ -20,13 +20,8 @@ export default {
   },
   methods: {
     init() {
-      camera = new THREE.PerspectiveCamera(
-        70,
-        window.innerWidth / window.innerHeight,
-        1,
-        1000
-      );
-      camera.position.z = 400;
+      camera = new THREE.PerspectiveCamera(70, 16 / 9, 1, 1000);
+      camera.position.z = 800;
 
       scene = new THREE.Scene();
 
@@ -42,30 +37,34 @@ export default {
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+      renderer.setSize(this.$refs.mainFrame.clientWidth, 500);
 
-      //
-
+      this.$refs.mainFrame.appendChild(renderer.domElement);
+      mesh.rotation.x += 10;
+      mesh.rotation.y += 10;
+      setTimeout(() => {
+        this.onWindowResize();
+      }, 1000);
       window.addEventListener("resize", this.onWindowResize);
     },
     onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = 16 / 9;
       camera.updateProjectionMatrix();
 
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(this.$refs.mainFrame.clientWidth, 500);
+      renderer.render(scene, camera);
     },
     animate() {
-      requestAnimationFrame(this.animate);
-
-      mesh.rotation.x += 0.005;
-      mesh.rotation.y += 0.01;
-
-      renderer.render(scene, camera);
+      //requestAnimationFrame(this.animate);
+      //mesh.rotation.x += 0.005;
+      //mesh.rotation.y += 0.01;
     },
   },
 };
 </script>
 
 <style>
+.main-frame {
+  width: 100%;
+}
 </style>
