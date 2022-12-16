@@ -23,10 +23,11 @@ let camera, scene, renderer;
 let mesh;
 export default {
   data() {
-    return {};
+    return {
+      controls: null,
+    };
   },
   mounted() {
-    console.log("Tedsdasda");
     this.$nextTick(() => {
       setTimeout(() => {
         this.init();
@@ -67,8 +68,8 @@ export default {
       );
 
       this.$refs.editorFrame.appendChild(renderer.domElement);
-      const controls = new OrbitControls(camera, renderer.domElement);
-      controls.target.set(1, 2, 3);
+      this.controls = new OrbitControls(camera, renderer.domElement);
+      this.controls.target.set(1, 1, 1);
       mesh.rotation.x += 10;
       mesh.rotation.y += 10;
       setTimeout(() => {
@@ -91,6 +92,11 @@ export default {
       //mesh.rotation.x += 0.005;
       //mesh.rotation.y += 0.01;
       renderer.render(scene, camera);
+    },
+  },
+  watch: {
+    controls(data) {
+      console.log(data);
     },
   },
 };

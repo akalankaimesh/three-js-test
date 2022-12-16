@@ -48,8 +48,8 @@ export default {
       );
 
       this.$refs.mainFrame.appendChild(renderer.domElement);
-      mesh.rotation.x += 10;
-      mesh.rotation.y += 10;
+      //mesh.rotation.x += 10;
+      //mesh.rotation.y += 10;
       setTimeout(() => {
         this.onWindowResize();
       }, 1000);
