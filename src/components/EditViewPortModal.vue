@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    @shown="init(), animate()"
     centered
     hide-footer
     size="xl"
@@ -25,6 +26,7 @@ export default {
     return {};
   },
   mounted() {
+    console.log("Tedsdasda");
     this.$nextTick(() => {
       setTimeout(() => {
         this.init();
@@ -34,8 +36,16 @@ export default {
   },
   methods: {
     init() {
-      camera = new THREE.OrthographicCamera(100, 100, 100, 100, 1, 1000);
-      camera.position.z = 800;
+      let clientWidth = this.$refs.editorFrame.clientWidth;
+      camera = new THREE.OrthographicCamera(
+        -clientWidth / 2,
+        clientWidth / 2,
+        -(clientWidth / 2),
+        clientWidth / 2,
+        -1000,
+        1000
+      );
+      //camera.position.z = 800;
 
       scene = new THREE.Scene();
 

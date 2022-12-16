@@ -16,7 +16,7 @@ export default {
     EditViewPortModal,
   },
   mounted() {
-    this.$bvModal.show("edit-view-modal");
+    //this.$bvModal.show("edit-view-modal");
   },
 };
 </script>

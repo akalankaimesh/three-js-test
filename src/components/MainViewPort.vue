@@ -1,6 +1,8 @@
 <template>
   <b-row no-gutters class="justify-content-center align-items-center vh-100">
-    <b-col md="8"><div class="main-frame" ref="mainFrame"></div></b-col>
+    <b-col md="8"
+      ><div class="main-frame" @click="openEditModal" ref="mainFrame"></div
+    ></b-col>
   </b-row>
 </template>
 
@@ -19,6 +21,9 @@ export default {
     });
   },
   methods: {
+    openEditModal() {
+      this.$bvModal.show(`edit-view-modal`);
+    },
     init() {
       camera = new THREE.PerspectiveCamera(70, 16 / 9, 1, 1000);
       camera.position.z = 800;
