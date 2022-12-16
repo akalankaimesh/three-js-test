@@ -1,11 +1,23 @@
 <template>
-  <b-row no-gutters class="justify-content-center align-items-center vh-100">
-    <b-col md="8"><div class="main-frame" ref="mainFrame"></div></b-col>
-  </b-row>
+  <b-modal
+    centered
+    hide-footer
+    size="xl"
+    id="edit-view-modal"
+    body-class="p-0"
+    title="Editor"
+  >
+    <b-row no-gutters>
+      <b-col md="12" class="position-relative">
+        <div class="w-100" ref="editorFrame"></div>
+      </b-col>
+    </b-row>
+  </b-modal>
 </template>
 
 <script>
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 let camera, scene, renderer;
 let mesh;
 export default {
@@ -14,13 +26,15 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.init();
-      this.animate();
+      setTimeout(() => {
+        this.init();
+        this.animate();
+      }, 1000);
     });
   },
   methods: {
     init() {
-      camera = new THREE.PerspectiveCamera(70, 16 / 9, 1, 1000);
+      camera = new THREE.OrthographicCamera(100, 100, 100, 100, 1, 1000);
       camera.position.z = 800;
 
       scene = new THREE.Scene();
@@ -38,11 +52,13 @@ export default {
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(
-        this.$refs.mainFrame.clientWidth,
-        (this.$refs.mainFrame.clientWidth * 9) / 16
+        this.$refs.editorFrame.clientWidth,
+        (this.$refs.editorFrame.clientWidth * 9) / 16
       );
 
-      this.$refs.mainFrame.appendChild(renderer.domElement);
+      this.$refs.editorFrame.appendChild(renderer.domElement);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.target.set(1, 2, 3);
       mesh.rotation.x += 10;
       mesh.rotation.y += 10;
       setTimeout(() => {
@@ -55,22 +71,20 @@ export default {
       camera.updateProjectionMatrix();
 
       renderer.setSize(
-        this.$refs.mainFrame.clientWidth,
-        (this.$refs.mainFrame.clientWidth * 9) / 16
+        this.$refs.editorFrame.clientWidth,
+        (this.$refs.editorFrame.clientWidth * 9) / 16
       );
       renderer.render(scene, camera);
     },
     animate() {
-      //requestAnimationFrame(this.animate);
+      requestAnimationFrame(this.animate);
       //mesh.rotation.x += 0.005;
       //mesh.rotation.y += 0.01;
+      renderer.render(scene, camera);
     },
   },
 };
 </script>
 
 <style>
-.main-frame {
-  width: 100%;
-}
 </style>
